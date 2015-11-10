@@ -1,0 +1,29 @@
+{
+  "name": "redux-action",
+  "version": "0.1.0",
+  "description": "redux action utils",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "babel lib --out-dir build",
+    "prepublish": "npm run build",
+    "test": "mocha --require babel-core/register",
+    "test-cov": "istanbul cover node_modules/.bin/_mocha -- --require babel-core/register -R dot -t 2000 test/*.js"
+  },
+  "repository": "onebook/redux-action",
+  "keywords": [
+    "reducer",
+    "action",
+    "redux"
+  ],
+  "author": "haoxin",
+  "license": "MIT",
+  "devDependencies": {
+    "babel": "6",
+    "babel-cli": "6",
+    "babel-core": "6",
+    "babel-preset-es2015": "6",
+    "immutable": "3",
+    "istanbul": "0",
+    "mocha": "2"
+  }
+}
