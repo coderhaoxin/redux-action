@@ -17,6 +17,7 @@ import { createAction } from 'redux-action'
 
 const action = createAction('ACTION', (args) => {
   // ...
+  return payload
 })
 ```
 
@@ -29,6 +30,8 @@ const reducer = createReducer(defaultState, {
   }
 })
 ```
+
+### Conceptions
 
 ### License
 MIT
