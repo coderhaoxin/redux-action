@@ -1,6 +1,6 @@
 {
   "name": "redux-action",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "redux action utils",
   "main": "build/index.js",
   "scripts": {
@@ -17,6 +17,10 @@
   ],
   "author": "haoxin",
   "license": "MIT",
+  "files": [
+    "build",
+    "lib"
+  ],
   "devDependencies": {
     "babel": "6",
     "babel-cli": "6",

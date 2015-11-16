@@ -1,6 +1,7 @@
 
 import createReducer from '../lib/create-reducer'
 import { deepEqual, strictEqual } from 'assert'
+import I from 'Immutable'
 
 describe('## create-reducer', () => {
   const GET_ITEMS = 'GET_ITEMS'
@@ -107,7 +108,7 @@ describe('## create-reducer', () => {
     })
   })
 
-  describe('# with immutable', () => {
+  describe('# with immutable payload property', () => {
     const defaultState = {
       title: 'hello',
       items: [{
@@ -117,11 +118,9 @@ describe('## create-reducer', () => {
 
     const reducer = createReducer(defaultState, {
       [GET_ITEMS]: (payload, state, action) => {
-        return payload
-      },
-
-      [ADD_ITEM]: (payload, state, action) => {
-        return payload
+        return {
+          items: I.fromJS(payload.items)
+        }
       }
     })
 
@@ -129,11 +128,13 @@ describe('## create-reducer', () => {
       const result = reducer(undefined, {
         type: GET_ITEMS,
         payload: {
-          items: [{
+          items: I.fromJS([{
             name: 'two'
-          }]
+          }])
         }
       })
+
+      result.items = result.items.toJS()
 
       deepEqual(result, { title: 'hello', items: [{ name: 'two' }] })
     })
@@ -153,30 +154,17 @@ describe('## create-reducer', () => {
         }
       })
 
+      result.items = result.items.toJS()
+
       deepEqual(result, { title: 'world', items: [{ name: 'two' }] })
     })
+  })
 
-    it('defaultState, no payload', () => {
-      const result = reducer(undefined, {
-        type: ADD_ITEM,
-        title: 'new'
-      })
+  describe('# with immutable payload', () => {
+    console.warn('TODO')
+  })
 
-      deepEqual(result, { title: 'new', items: [{ name: 'one' }] })
-    })
-
-    it('state, payload', () => {
-      const result = reducer({
-        title: 'old',
-        items: [{
-          name: 'hello'
-        }]
-      }, {
-        type: ADD_ITEM,
-        title: 'new'
-      })
-
-      deepEqual(result, { title: 'new', items: [{ name: 'hello' }] })
-    })
+  describe('# with immutable state', () => {
+    console.warn('TODO')
   })
 })
