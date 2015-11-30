@@ -1,0 +1,54 @@
+
+import createSyncAction from '../lib/create-sync-action'
+import { equal, deepEqual } from 'assert'
+
+const GET_ITEMS = 'GET_ITEMS'
+
+describe('## create-action', () => {
+  describe('# basic', () => {
+    it('createSyncAction(type, payload)', () => {
+      const action01 = createSyncAction(GET_ITEMS, 123)
+      const action02 = createSyncAction(GET_ITEMS, { name: 'hi' })
+      const action03 = createSyncAction(GET_ITEMS, [1, 2, 3])
+
+      testAction(action01, {
+        type: 'GET_ITEMS',
+        payload: 123
+      })
+
+      testAction(action02, {
+        type: 'GET_ITEMS',
+        payload: { name: 'hi' }
+      })
+
+      testAction(action03, {
+        type: 'GET_ITEMS',
+        payload: [1, 2, 3]
+      })
+    })
+
+    it('createSyncAction(type, syncPayloadCreator)', () => {
+      const action01 = createSyncAction(GET_ITEMS, (a, b, c) => ({a, b, c}))
+      const action02 = createSyncAction(GET_ITEMS, name => name)
+
+      testAction(action01, {
+        type: 'GET_ITEMS',
+        payload: { a: 'a', b: 'b', c: 'c' }
+      }, 'a', 'b', 'c')
+
+      testAction(action02, {
+        type: 'GET_ITEMS',
+        payload: 'hello'
+      }, 'hello')
+    })
+  })
+})
+
+function testAction(action, expected, ...args) {
+  const runner = action(...args)
+  deepEqual(runner, expected)
+}
+
+function rejectPromise() {
+  return Promise.reject(new Error('rejected'))
+}
