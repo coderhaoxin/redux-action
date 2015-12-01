@@ -1,6 +1,6 @@
 {
   "name": "redux-action",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "redux action utils",
   "main": "build/index.js",
   "scripts": {
@@ -29,5 +29,8 @@
     "immutable": "3",
     "istanbul": "0",
     "mocha": "2"
+  },
+  "dependencies": {
+    "clone": "1"
   }
 }
