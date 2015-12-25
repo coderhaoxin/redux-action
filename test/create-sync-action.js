@@ -41,6 +41,22 @@ describe('## create-action', () => {
         payload: 'hello'
       }, 'hello')
     })
+
+    it('createSyncAction(type, syncPayloadCreator, metaCreator)', () => {
+      const action01 = createSyncAction(GET_ITEMS, name => name, { desc: 'nothing' })
+      const action02 = createSyncAction(GET_ITEMS, name => name, name => name)
+
+      testAction(action01, {
+        type: 'GET_ITEMS',
+        payload: 'hello'
+      }, 'hello')
+
+      testAction(action02, {
+        type: 'GET_ITEMS',
+        payload: 'hello',
+        meta: 'hello'
+      }, 'hello')
+    })
   })
 })
 

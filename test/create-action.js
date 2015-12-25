@@ -97,6 +97,33 @@ describe('## create-action', () => {
         }, 'world')
       ])
     })
+
+    it('meta', () => {
+      const action01 = createAction(GET_ITEMS, (a, b, c) => {
+        return new Promise((resolve) => {
+          setTimeout(resolve({a, b, c}), 500)
+        })
+      }, { desc: 'nothing' })
+
+      const action02 = createAction(GET_ITEMS, (a, b, c) => {
+        return new Promise((resolve) => {
+          setTimeout(resolve({a, b, c}), 500)
+        })
+      }, (a, b, c) => ({a, b, c}))
+
+      return Promise.all([
+        testAction(action01, {
+          type: 'GET_ITEMS',
+          payload: { a: 'a', b: 'b', c: 'c' },
+        }, 'a', 'b', 'c'),
+
+        testAction(action02, {
+          type: 'GET_ITEMS',
+          payload: { a: 'a', b: 'b', c: 'c' },
+          meta: { a: 'a', b: 'b', c: 'c' }
+        }, 'a', 'b', 'c')
+      ])
+    })
   })
 
   describe('edge cases', () => {

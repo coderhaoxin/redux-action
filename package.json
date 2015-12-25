@@ -1,6 +1,6 @@
 {
   "name": "redux-action",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "redux action utils",
   "main": "build/index.js",
   "scripts": {
