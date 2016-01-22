@@ -7,25 +7,23 @@ const GET_ITEMS = 'GET_ITEMS'
 describe('## create-action', () => {
   describe('# basic', () => {
     it('createAction(type, payload)', () => {
-      const action01 = createAction(GET_ITEMS, 123)
-      const action02 = createAction(GET_ITEMS, { name: 'hi' })
-      const action03 = createAction(GET_ITEMS, [1, 2, 3])
+      const action = createAction(GET_ITEMS)
 
       return Promise.all([
-        testAction(action01, {
+        testAction(action, {
           type: 'GET_ITEMS',
           payload: 123
-        }),
+        }, 123),
 
-        testAction(action02, {
+        testAction(action, {
           type: 'GET_ITEMS',
           payload: { name: 'hi' }
-        }),
+        }, { name: 'hi' }),
 
-        testAction(action03, {
+        testAction(action, {
           type: 'GET_ITEMS',
           payload: [1, 2, 3]
-        })
+        }, [1, 2, 3])
       ])
     })
 
@@ -135,15 +133,15 @@ describe('## create-action', () => {
       let count = 0
 
       return Promise.all([
-        testAction(action01).catch((e) => {
+        testAction(action01).catch(e => {
           equal(e.message, '1')
           ++count
         }),
-        testAction(action02).catch((e) => {
+        testAction(action02).catch(e => {
           equal(e.message, '2')
           ++count
         }),
-        testAction(action03).catch((data) => {
+        testAction(action03).catch(data => {
           equal(data, '2')
           ++count
         })
@@ -156,16 +154,14 @@ describe('## create-action', () => {
 
 function testAction(action, expected, ...args) {
   return new Promise((resolve) => {
-    const dispatch = (data) => {
+    const dispatch = data => {
       deepEqual(data, expected)
       resolve(data)
     }
 
-    const getState = () => {
-      return {
-        info: 'test'
-      }
-    }
+    const getState = () => ({
+      info: 'test'
+    })
 
     const runner = action(...args)
 

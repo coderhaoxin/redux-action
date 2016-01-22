@@ -1,6 +1,6 @@
 {
   "name": "redux-action",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "redux action utils",
   "main": "build/index.js",
   "scripts": {
@@ -11,15 +11,19 @@
   },
   "repository": "onebook/redux-action",
   "keywords": [
+    "promise",
     "reducer",
+    "actions",
     "action",
+    "async",
+    "react",
     "redux"
   ],
   "author": "haoxin",
   "license": "MIT",
   "files": [
-    "build",
-    "lib"
+    "build/",
+    "lib/"
   ],
   "devDependencies": {
     "babel": "6",

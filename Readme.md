@@ -7,19 +7,31 @@
 
 ### redux-action
 
+* similar to `redux-actions`
+* use `dispatch` with `Promise` for `async` actions
+* `payload` first
+* async support (promise)
+* works with `redux-thunk`
+
 ### APIs
 
-* `createReducer`
 * `createAction`
 
 ```js
 import { createAction } from 'redux-action'
 
-const action = createAction('ACTION', (args) => {
+const action = createAction('ACTION', (...args) => {
   // ...
   return payload
 })
+
+const asyncAction = createAction('ASYNC_ACTION', (...args) => {
+  // ...
+  return Promise.resolve(payload)
+})
 ```
+
+* `createReducer`
 
 ```js
 import { createReducer } from 'redux-action'
@@ -27,11 +39,42 @@ import { createReducer } from 'redux-action'
 const reducer = createReducer(defaultState, {
   'ACTION': (payload, state, action) => {
     // ...
+    // only return updated state
+    // will assign to state automatically
+    return {
+      something
+    }
+  },
+  'ASYNC_ACTION': (payload, state, action) => {
+    // ...
+    return {
+      something
+    }
   }
 })
 ```
 
-### Conceptions
+* use `dispatch` with `Promise` support
+
+```js
+class Com extends React.Component {
+  updateData() {
+    const { dispatch } = this.props
+
+    dispatch(updateData)
+      .then(fetchData)
+      .then(...)
+      .catch(...)
+  }
+  render() {
+    // ...
+  }
+}
+```
+
+### See also
+
+* [gaearon/redux-thunk](https://github.com/gaearon/redux-thunk)
 
 ### License
 MIT

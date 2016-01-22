@@ -7,24 +7,22 @@ const GET_ITEMS = 'GET_ITEMS'
 describe('## create-action', () => {
   describe('# basic', () => {
     it('createSyncAction(type, payload)', () => {
-      const action01 = createSyncAction(GET_ITEMS, 123)
-      const action02 = createSyncAction(GET_ITEMS, { name: 'hi' })
-      const action03 = createSyncAction(GET_ITEMS, [1, 2, 3])
+      const action = createSyncAction(GET_ITEMS)
 
-      testAction(action01, {
+      testAction(action, {
         type: 'GET_ITEMS',
         payload: 123
-      })
+      }, 123)
 
-      testAction(action02, {
+      testAction(action, {
         type: 'GET_ITEMS',
         payload: { name: 'hi' }
-      })
+      }, { name: 'hi' })
 
-      testAction(action03, {
+      testAction(action, {
         type: 'GET_ITEMS',
         payload: [1, 2, 3]
-      })
+      }, [1, 2, 3])
     })
 
     it('createSyncAction(type, syncPayloadCreator)', () => {
