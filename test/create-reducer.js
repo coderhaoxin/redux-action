@@ -1,7 +1,7 @@
 
 import createReducer from '../lib/create-reducer'
 import { deepEqual, strictEqual } from 'assert'
-import I from 'Immutable'
+import I from 'immutable'
 
 describe('## create-reducer', () => {
   const GET_ITEMS = 'GET_ITEMS'

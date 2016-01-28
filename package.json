@@ -1,6 +1,6 @@
 {
   "name": "redux-action",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "redux action utils",
   "main": "build/index.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "test": "mocha --require babel-core/register",
     "test-cov": "istanbul cover node_modules/.bin/_mocha -- --require babel-core/register -R dot -t 2000 test/*.js"
   },
-  "repository": "onebook/redux-action",
+  "repository": "coderhaoxin/redux-action",
   "keywords": [
     "promise",
     "reducer",
