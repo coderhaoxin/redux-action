@@ -7,11 +7,16 @@
 
 ### redux-action
 
-* similar to `redux-actions`
-* use `dispatch` with `Promise` for `async` actions
-* `payload` first
-* async support (promise)
-* works with `redux-thunk`
+```js
+import { createAction, createReducer } from 'redux-action'
+```
+
+* Inspired by [redux-actions](https://github.com/acdlite/redux-actions)
+* Uses `dispatch` with `Promise chain`
+* Async support (Promise)
+* `payload` first reducer
+* Assign updated data to state automatically
+* Works with `redux-thunk`
 
 ### APIs
 
@@ -20,12 +25,12 @@
 ```js
 import { createAction } from 'redux-action'
 
-const action = createAction('ACTION', (...args) => {
+const action = createAction('action', (...args) => {
   // ...
   return payload
 })
 
-const asyncAction = createAction('ASYNC_ACTION', (...args) => {
+const asyncAction = createAction('async action', (...args) => {
   // ...
   return Promise.resolve(payload)
 })
@@ -37,24 +42,23 @@ const asyncAction = createAction('ASYNC_ACTION', (...args) => {
 import { createReducer } from 'redux-action'
 
 const reducer = createReducer(defaultState, {
-  'ACTION': (payload, state, action) => {
+  'action': (payload, state, action) => {
     // ...
     // only return updated state
     // will assign to state automatically
-    return {
-      something
-    }
+    return updatedData
   },
-  'ASYNC_ACTION': (payload, state, action) => {
+
+  'async action': (payload, state, action) => {
     // ...
-    return {
-      something
-    }
-  }
+    return updatedData
+  },
+
+  'common usage': payload => ({some: payload}),
 })
 ```
 
-* use `dispatch` with `Promise` support
+* Uses `dispatch` with `Promise`
 
 ```js
 class Com extends React.Component {
@@ -62,14 +66,70 @@ class Com extends React.Component {
     const { dispatch } = this.props
 
     dispatch(updateData)
-      .then(fetchData)
-      .then(...)
-      .catch(...)
+      .then(dispatch(fetchData))
+      .then(anyAction)
   }
+
   render() {
     // ...
   }
 }
+```
+
+### Full example
+
+* store.js
+
+```js
+
+import { createStore, applyMiddleware } from 'redux'
+import reduxThunk from 'redux-thunk'
+import reducer from './reducer'
+
+const createStoreWithMiddleware = applyMiddleware(
+  reduxThunk
+)(createStore)
+
+const store = createStoreWithMiddleware(reducer)
+
+export default store
+
+```
+
+* action.js
+
+```js
+
+import { createAction } from 'redux-action'
+
+export const setUserStatus = createAction('set user status', status => status)
+export const getUserInfo = createAction('get user info', Promise.resolve(userInfo))
+```
+
+* reducer.js
+
+```js
+
+import { createReducer } from 'redux-action'
+import { combineReducers } from 'redux'
+
+const defaultState = {
+  status: 'normal',
+  info: {},
+}
+
+const user = createReducer(defaultState, {
+  'set user status': status => ({status}),
+  'get user info': info => ({info}),
+})
+
+// combine reducers
+
+const rootReducer = combineReducers({
+  user,
+})
+
+export default rootReducer
 ```
 
 ### See also

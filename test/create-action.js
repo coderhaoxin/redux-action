@@ -2,50 +2,48 @@
 import createAction from '../lib/create-action'
 import { equal, deepEqual } from 'assert'
 
-const GET_ITEMS = 'GET_ITEMS'
-
 describe('## create-action', () => {
   describe('# basic', () => {
     it('createAction(type, payload)', () => {
-      const action = createAction(GET_ITEMS)
+      const action = createAction('get items')
 
       return Promise.all([
         testAction(action, {
-          type: 'GET_ITEMS',
+          type: 'get items',
           payload: 123
         }, 123),
 
         testAction(action, {
-          type: 'GET_ITEMS',
+          type: 'get items',
           payload: 0
         }, 0),
 
         testAction(action, {
-          type: 'GET_ITEMS',
+          type: 'get items',
           payload: null
         }, null),
 
         testAction(action, {
-          type: 'GET_ITEMS',
+          type: 'get items',
           payload: false
         }, false),
 
         testAction(action, {
-          type: 'GET_ITEMS',
+          type: 'get items',
           payload: { name: 'hi' }
         }, { name: 'hi' }),
 
         testAction(action, {
-          type: 'GET_ITEMS',
+          type: 'get items',
           payload: [1, 2, 3]
         }, [1, 2, 3])
       ])
     })
 
     it('createAction(type, syncPayloadCreator)', () => {
-      const action01 = createAction(GET_ITEMS, (a, b, c) => ({a, b, c}))
-      const action02 = createAction(GET_ITEMS, name => name)
-      const action03 = createAction(GET_ITEMS, function(name) {
+      const action01 = createAction('get items', (a, b, c) => ({a, b, c}))
+      const action02 = createAction('get items', name => name)
+      const action03 = createAction('get items', function(name) {
         return {
           state: this.getState(),
           name
@@ -54,56 +52,56 @@ describe('## create-action', () => {
 
       return Promise.all([
         testAction(action01, {
-          type: 'GET_ITEMS',
+          type: 'get items',
           payload: { a: 'a', b: 'b', c: 'c' }
         }, 'a', 'b', 'c'),
 
         testAction(action02, {
-          type: 'GET_ITEMS',
+          type: 'get items',
           payload: 'hello'
         }, 'hello'),
 
         testAction(action02, {
-          type: 'GET_ITEMS',
+          type: 'get items',
           payload: {} // default payload
         }),
 
         testAction(action02, {
-          type: 'GET_ITEMS',
+          type: 'get items',
           payload: 0
         }, 0),
 
         testAction(action02, {
-          type: 'GET_ITEMS',
+          type: 'get items',
           payload: null
         }, null),
 
         testAction(action02, {
-          type: 'GET_ITEMS',
+          type: 'get items',
           payload: false
         }, false),
 
         testAction(action03, {
           payload: { state: { info: 'test' }, name: 'world' },
-          type: 'GET_ITEMS'
+          type: 'get items'
         }, 'world')
       ])
     })
 
     it('createAction(type, asyncPayloadCreator)', () => {
-      const action01 = createAction(GET_ITEMS, (name) => {
+      const action01 = createAction('get items', (name) => {
         return new Promise((resolve) => {
           setTimeout(resolve(name), 500)
         })
       })
 
-      const action02 = createAction(GET_ITEMS, (a, b, c) => {
+      const action02 = createAction('get items', (a, b, c) => {
         return new Promise((resolve) => {
           setTimeout(resolve({a, b, c}), 500)
         })
       })
 
-      const action03 = createAction(GET_ITEMS, function(name) {
+      const action03 = createAction('get items', function(name) {
         return new Promise((resolve) => {
           setTimeout(resolve({
             state: this.getState(),
@@ -113,7 +111,7 @@ describe('## create-action', () => {
       })
 
       // catch
-      const action04 = createAction(GET_ITEMS, (name) => {
+      const action04 = createAction('get items', (name) => {
         return rejectPromise().catch((err) => {
           equal(err.message, 'rejected')
         }).then(() => name)
@@ -121,50 +119,50 @@ describe('## create-action', () => {
 
       return Promise.all([
         testAction(action01, {
-          type: 'GET_ITEMS',
+          type: 'get items',
           payload: {} // default payload
         }),
 
         testAction(action01, {
-          type: 'GET_ITEMS',
+          type: 'get items',
           payload: 0
         }, 0),
 
         testAction(action01, {
-          type: 'GET_ITEMS',
+          type: 'get items',
           payload: null
         }, null),
 
         testAction(action01, {
-          type: 'GET_ITEMS',
+          type: 'get items',
           payload: false
         }, false),
 
         testAction(action02, {
-          type: 'GET_ITEMS',
+          type: 'get items',
           payload: { a: 'a', b: 'b', c: 'c' }
         }, 'a', 'b', 'c'),
 
         testAction(action03, {
-          type: 'GET_ITEMS',
+          type: 'get items',
           payload: { state: { info: 'test' }, name: 'hello' }
         }, 'hello'),
 
         testAction(action04, {
-          type: 'GET_ITEMS',
+          type: 'get items',
           payload: 'world'
         }, 'world')
       ])
     })
 
     it('meta', () => {
-      const action01 = createAction(GET_ITEMS, (a, b, c) => {
+      const action01 = createAction('get items', (a, b, c) => {
         return new Promise((resolve) => {
           setTimeout(resolve({a, b, c}), 500)
         })
       }, { desc: 'nothing' })
 
-      const action02 = createAction(GET_ITEMS, (a, b, c) => {
+      const action02 = createAction('get items', (a, b, c) => {
         return new Promise((resolve) => {
           setTimeout(resolve({a, b, c}), 500)
         })
@@ -172,12 +170,12 @@ describe('## create-action', () => {
 
       return Promise.all([
         testAction(action01, {
-          type: 'GET_ITEMS',
+          type: 'get items',
           payload: { a: 'a', b: 'b', c: 'c' },
         }, 'a', 'b', 'c'),
 
         testAction(action02, {
-          type: 'GET_ITEMS',
+          type: 'get items',
           payload: { a: 'a', b: 'b', c: 'c' },
           meta: { a: 'a', b: 'b', c: 'c' }
         }, 'a', 'b', 'c')
@@ -187,16 +185,16 @@ describe('## create-action', () => {
 
   describe('edge cases', () => {
     it('error', () => {
-      const action01 = createAction(GET_ITEMS, () => { throw new Error('1') })
-      const action02 = createAction(GET_ITEMS, () => Promise.reject(new Error('2')))
-      const action03 = createAction(GET_ITEMS, () => Promise.reject('2'))
-      const action04 = createAction(GET_ITEMS, () => Promise.resolve())
-      const action05 = createAction(GET_ITEMS, () => Promise.reject().catch(() => {}))
+      const action01 = createAction('get items', () => { throw new Error('1') })
+      const action02 = createAction('get items', () => Promise.reject(new Error('2')))
+      const action03 = createAction('get items', () => Promise.reject('2'))
+      const action04 = createAction('get items', () => Promise.resolve())
+      const action05 = createAction('get items', () => Promise.reject().catch(() => {}))
 
       let count = 0
 
       const defVal = {
-        type: GET_ITEMS,
+        type: 'get items',
         payload: {},
       }
 

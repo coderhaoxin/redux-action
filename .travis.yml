@@ -2,6 +2,6 @@ language: node_js
 node_js:
   - '5'
 script:
-  - "npm run test-cov"
+  - npm run test-cov
 after_script:
-  - "npm i codecov.io && cat ./coverage/coverage.json | ./node_modules/codecov.io/bin/codecov.io.js"
+  - npm i codecov && ./node_modules/.bin/codecov

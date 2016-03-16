@@ -4,9 +4,6 @@ import { deepEqual, strictEqual } from 'assert'
 import I from 'immutable'
 
 describe('## create-reducer', () => {
-  const GET_ITEMS = 'GET_ITEMS'
-  const ADD_ITEM = 'ADD_ITEM'
-
   describe('# basic', () => {
     const defaultState = {
       title: 'hello',
@@ -16,18 +13,20 @@ describe('## create-reducer', () => {
     }
 
     const reducer = createReducer(defaultState, {
-      [GET_ITEMS]: (payload, state, action) => {
+      'get items': (payload, state, action) => {
         return payload
       },
 
-      [ADD_ITEM]: (payload, state, action) => {
+      'add item': (payload, state, action) => {
         return payload
-      }
+      },
+
+      'invalid handler': {}
     })
 
     it('defaultState, payload', () => {
       const result = reducer(undefined, {
-        type: GET_ITEMS,
+        type: 'get items',
         payload: {
           items: [{
             name: 'two'
@@ -45,7 +44,7 @@ describe('## create-reducer', () => {
           name: 'three'
         }]
       }, {
-        type: GET_ITEMS,
+        type: 'get items',
         payload: {
           items: [{
             name: 'two'
@@ -58,7 +57,7 @@ describe('## create-reducer', () => {
 
     it('defaultState, no payload', () => {
       const result = reducer(undefined, {
-        type: ADD_ITEM,
+        type: 'add item',
         title: 'new'
       })
 
@@ -72,7 +71,7 @@ describe('## create-reducer', () => {
           name: 'hello'
         }]
       }, {
-        type: ADD_ITEM,
+        type: 'add item',
         title: 'new'
       })
 
@@ -89,22 +88,65 @@ describe('## create-reducer', () => {
     }
 
     const reducer = createReducer(defaultState, {
-      [GET_ITEMS]: (payload, state, action) => {
+      'get items': (payload, state, action) => {
         return payload
       },
 
-      [ADD_ITEM]: (payload, state, action) => {
+      'add item': (payload, state, action) => {
         return payload
-      }
+      },
     })
 
     it('defaultState, payload = null', () => {
       const result = reducer(undefined, {
-        type: GET_ITEMS,
+        type: 'get items',
         payload: null
       })
 
       deepEqual(result, { title: 'hello', items: [{ name: 'one' }] })
+    })
+
+    it('no type', () => {
+      const result = reducer(undefined, {})
+
+      deepEqual(result, { title: 'hello', items: [{ name: 'one' }] })
+    })
+
+    it('invalid handler', () => {
+      const result = reducer(undefined, {
+        type: 'invalid handler',
+        payload: {
+          title: 'should not change'
+        }
+      })
+
+      deepEqual(result, { title: 'hello', items: [{ name: 'one' }] })
+    })
+
+    it('invalid defaultState', () => {
+      let done = false
+
+      try {
+        createReducer()
+      } catch (e) {
+        strictEqual(e.message, 'invalid defaultState')
+        done = true
+      }
+
+      strictEqual(done, true)
+    })
+
+    it('invalid handlers', () => {
+      let done = false
+
+      try {
+        createReducer({})
+      } catch (e) {
+        strictEqual(e.message, 'invalid handlers')
+        done = true
+      }
+
+      strictEqual(done, true)
     })
   })
 
@@ -117,7 +159,7 @@ describe('## create-reducer', () => {
     }
 
     const reducer = createReducer(defaultState, {
-      [GET_ITEMS]: (payload, state, action) => {
+      'get items': (payload, state, action) => {
         return {
           items: I.fromJS(payload.items)
         }
@@ -126,7 +168,7 @@ describe('## create-reducer', () => {
 
     it('defaultState, payload', () => {
       const result = reducer(undefined, {
-        type: GET_ITEMS,
+        type: 'get items',
         payload: {
           items: I.fromJS([{
             name: 'two'
@@ -146,7 +188,7 @@ describe('## create-reducer', () => {
           name: 'three'
         }]
       }, {
-        type: GET_ITEMS,
+        type: 'get items',
         payload: {
           items: [{
             name: 'two'
