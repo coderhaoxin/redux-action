@@ -1,6 +1,6 @@
 
 [![Build status][travis-img]][travis-url]
-[![Test coverage][coveralls-img]][coveralls-url]
+[![Test coverage][codecov-img]][codecov-url]
 [![NPM version][npm-img]][npm-url]
 [![License][license-img]][license-url]
 [![Dependency status][david-img]][david-url]
@@ -143,8 +143,8 @@ MIT
 [npm-url]: https://npmjs.org/package/redux-action
 [travis-img]: https://img.shields.io/travis/coderhaoxin/redux-action.svg?style=flat-square
 [travis-url]: https://travis-ci.org/coderhaoxin/redux-action
-[coveralls-img]: https://img.shields.io/coveralls/coderhaoxin/redux-action.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/r/coderhaoxin/redux-action?branch=master
+[codecov-img]: https://img.shields.io/codecov/c/github/coderhaoxin/redux-action.svg?style=flat-square
+[codecov-url]: https://codecov.io/github/coderhaoxin/redux-action?branch=master
 [license-img]: https://img.shields.io/badge/license-MIT-green.svg?style=flat-square
 [license-url]: http://opensource.org/licenses/MIT
 [david-img]: https://img.shields.io/david/coderhaoxin/redux-action.svg?style=flat-square
