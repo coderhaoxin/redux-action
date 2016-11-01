@@ -4,6 +4,10 @@ import { equal, deepEqual } from 'assert'
 
 describe('## create-action', () => {
   describe('# basic', () => {
+    it('createAction(type)', () => {
+      const action = createAction('get items');
+      equal(action.type, 'get items')
+    });
     it('createAction(type, payload)', () => {
       const action = createAction('get items')
 
