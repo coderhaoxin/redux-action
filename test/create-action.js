@@ -4,6 +4,7 @@ import { equal, deepEqual } from 'assert'
 
 describe('## create-action', () => {
   describe('# basic', () => {
+
     it('createAction(type)', () => {
       const action = createAction('get items')
       equal(action.type, 'get items')
@@ -181,6 +182,64 @@ describe('## create-action', () => {
 
         testAction(action02, {
           type: 'get items',
+          payload: { a: 'a', b: 'b', c: 'c' },
+          meta: { a: 'a', b: 'b', c: 'c' }
+        }, 'a', 'b', 'c')
+      ])
+    })
+  })
+
+  describe('## create none type action', () => {
+
+    it('createAction()', () => {
+      const action = createAction()
+      equal(typeof action.type, 'string')
+      equal(action.type, action.toString())
+    })
+
+    it('createAction(payload)', () => {
+      const action = createAction()
+      const type = action.type
+
+      return Promise.all([
+        testAction(action, {
+          type,
+          payload: 0
+        }, 0),
+
+        testAction(action, {
+          type,
+          payload: { name: 'hi' }
+        }, { name: 'hi' }),
+
+        testAction(action, {
+          type,
+          payload: [1, 2, 3]
+        }, [1, 2, 3])
+      ])
+    })
+
+    it('meta', () => {
+      const action01 = createAction((a, b, c) => {
+        return new Promise((resolve) => {
+          setTimeout(resolve({a, b, c}), 500)
+        })
+      }, { desc: 'nothing' })
+
+      const action02 = createAction((a, b, c) => {
+        return new Promise((resolve) => {
+          setTimeout(resolve({a, b, c}), 500)
+        })
+      }, (a, b, c) => ({a, b, c}))
+
+      return Promise.all([
+        testAction(action01, {
+          type: action01.type,
+          payload: { a: 'a', b: 'b', c: 'c' },
+        }, 'a', 'b', 'c'),
+
+        testAction(action02, {
+          type: action02.type,
           payload: { a: 'a', b: 'b', c: 'c' },
           meta: { a: 'a', b: 'b', c: 'c' }
         }, 'a', 'b', 'c')
