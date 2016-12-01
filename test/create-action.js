@@ -10,6 +10,43 @@ describe('## create-action', () => {
       equal(action.type, action.toString())
     })
 
+    it('createAction(payload)', () => {
+      const action = createAction()
+      const type = action.type
+
+      return Promise.all([
+        testAction(action, {
+          type,
+          payload: 123
+        }, 123),
+
+        testAction(action, {
+          type,
+          payload: 0
+        }, 0),
+
+        testAction(action, {
+          type,
+          payload: null
+        }, null),
+
+        testAction(action, {
+          type,
+          payload: false
+        }, false),
+
+        testAction(action, {
+          type,
+          payload: { name: 'hi' }
+        }, { name: 'hi' }),
+
+        testAction(action, {
+          type,
+          payload: [1, 2, 3]
+        }, [1, 2, 3])
+      ])
+    })
+
     it('createAction(type)', () => {
       const action = createAction('get items')
       equal(action.type, 'get items')
