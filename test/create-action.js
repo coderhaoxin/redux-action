@@ -6,8 +6,8 @@ describe('## create-action', () => {
   describe('# basic', () => {
     it('createAction()', () => {
       const action = createAction()
-      equal(action.type, 'auto_gen_type_0')
-      equal(action.toString(), 'auto_gen_type_0')
+      equal(typeof action.type, 'string')
+      equal(action.type, action.toString())
     })
 
     it('createAction(type)', () => {
