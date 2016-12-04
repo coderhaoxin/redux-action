@@ -1,6 +1,6 @@
 
 import createAction from '../lib/create-action'
-import { equal, deepEqual } from 'assert'
+import { ok, equal, deepEqual } from 'assert'
 
 describe('## create-action', () => {
   describe('# basic', () => {
@@ -8,6 +8,7 @@ describe('## create-action', () => {
     it('createAction(type)', () => {
       const action = createAction('get items')
       equal(action.type, 'get items')
+      ok(action.toString().startsWith('function fn() {'))
     })
 
     it('createAction(type, payload)', () => {
