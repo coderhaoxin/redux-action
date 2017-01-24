@@ -11,9 +11,8 @@
 import { createAction, createReducer } from 'redux-action'
 ```
 
-* Inspired by [redux-actions](https://github.com/acdlite/redux-actions)
 * Uses `dispatch` with `Promise chain`
-* Async support (Promise)
+* Generates `action type` automatically when no pass `action type`
 * `payload` first reducer
 * Assign updated data to state automatically
 * Works with `redux-thunk`
@@ -62,12 +61,13 @@ const reducer = createReducer(defaultState, {
 
 ```js
 class Com extends React.Component {
-  updateData() {
+  async updateData() {
     const { dispatch } = this.props
 
-    dispatch(updateData)
-      .then(dispatch(fetchData))
-      .then(anyAction)
+    await dispatch(updateData)
+    await dispatch(fetchData)
+    await anyAction
+    // ...
   }
 
   render() {
