@@ -103,7 +103,7 @@ export default store
 import { createAction } from 'redux-action'
 
 export const setUserStatus = createAction('set user status', status => status)
-export const getUserInfo = createAction('get user info', Promise.resolve(userInfo))
+export const getUserInfo = createAction('get user info', () => Promise.resolve(userInfo))
 ```
 
 * reducer.js
@@ -130,6 +130,43 @@ const rootReducer = combineReducers({
 })
 
 export default rootReducer
+```
+
+### Auto generated action type
+
+`createAction` also can generate a unique type, when no pass any string in the first argument.
+
+* action.js
+
+```js
+
+import { createAction } from 'redux-action'
+
+export const setUserStatus = createAction(status => status)
+export const getUserInfo = createAction(() => Promise.resolve(userInfo))
+```
+
+* reducer.js
+
+```js
+
+import { createReducer } from 'redux-action'
+
+import {
+  setUserStatus,
+  getUserInfo
+} from './action'
+
+const defaultState = {
+  status: 'normal',
+  info: {},
+}
+
+const user = createReducer(defaultState, {
+  [setUserStatus]: status => ({status}),
+  [getUserInfo]: info => ({info}),
+})
+
 ```
 
 ### See also
