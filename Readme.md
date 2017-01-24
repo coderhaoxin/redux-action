@@ -60,13 +60,15 @@ const reducer = createReducer(defaultState, {
 * Uses `dispatch` with `Promise`
 
 ```js
-class Com extends React.Component {
-  async updateData() {
-    const { dispatch } = this.props
+class App extends React.Component {
+  async updateData(data) {
+    const {
+      dispatch,
+      userId
+    } = this.props
 
-    await dispatch(updateData)
-    await dispatch(fetchData)
-    await anyAction
+    await dispatch(updateUserInfo(userId, data))
+    await dispatch(getUserInfo(userId))
     // ...
   }
 
